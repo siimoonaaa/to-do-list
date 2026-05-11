@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+	<meta charset="utf-8">
+	<title>Tavs kalendārs</title>
+
+	<style>
+		body{
+			font-family: Arial;
+			margin: 40px;
+		}
+
+		table{
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+		th, td{
+			border: 1px solid black;
+			padding: 10px;
+			text-align: left;
+		}
+		 th {
+            background-color: #f0f0f0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<h1>Darāmo darbu saraksts</h1>
+
+<form action="/pievienot" method="POST">
+
+    <input type="text"
+           name="daramais"
+           placeholder="Darāmais darbs"
+           required>
+
+    <input type="date"
+           name="datums"
+           required>
+
+    <select name="statuss">
+        <option value="Vēl jāizdara">Vēl jāizdara</option>
+        <option value="Padarīts">Padarīts</option>
+    </select>
+    <button type="submit">Pievienot</button>
+</form>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Darāmie darbi</th>
+        <th>Datums līdz kuram jāizdara</th>
+        <th>Statuss</th>
+    </tr>
+
+    {% for darbs in darbi %}
+
+    <tr>
+        <td>{{ darbs[0] }}</td>
+        <td>{{ darbs[1] }}</td>
+        <td>{{ darbs[2] }}</td>
+        <td>{{ darbs[3] }}</td>
+    </tr>
+
+    {% endfor %}
+
+	</style>
+</head>
