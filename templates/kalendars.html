@@ -1,79 +1,39 @@
 {% extends "base.html" %}
-
 {% block content %}
-<head>
-	<meta charset="utf-8">
-	<title>Tavs kalendārs</title>
+<div style="max-width: 800px; margin: 30px auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <h2 style="color: #2E5984;">Mani Darbi</h2>
+    
+    <form action="/pievienot" method="POST" style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <input type="text" name="uzdevums" placeholder="Kas jādara?" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="date" name="datums" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="time" name="laiks" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <select name="statuss" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <option value="Nav sākts">Nav sākts</option>
+                <option value="Procesā">Procesā</option>
+                <option value="Pabeigts">Pabeigts</option>
+            </select>
+        </div>
+        <button type="submit" style="margin-top: 15px; width: 100%; background: #2E5984; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Pievienot sarakstam</button>
+    </form>
 
-	<style>
-		body{
-			font-family: Arial;
-			margin: 40px;
-		}
-
-		table{
-			width: 100%;
-			border-collapse: collapse;
-			margin-top: 20px;
-		}
-		th, td{
-			border: 1px solid black;
-			padding: 10px;
-			text-align: left;
-		}
-		 th {
-            background-color: #f0f0f0;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        input, select, button {
-            padding: 8px;
-            margin-right: 10px;
-        }
-
-    </style>
-</head>
-
-<body>
-<h1>Darāmo darbu saraksts</h1>
-
-<form action="/pievienot" method="POST">
-
-    <input type="text"
-           name="daramais"
-           placeholder="Darāmais darbs"
-           required>
-
-    <input type="date"
-           name="datums"
-           required>
-
-    <select name="statuss">
-        <option value="Vēl jāizdara">Vēl jāizdara</option>
-        <option value="Padarīts">Padarīts</option>
-    </select>
-    <button type="submit">Pievienot</button>
-</form>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Darāmie darbi</th>
-        <th>Datums līdz kuram jāizdara</th>
-        <th>Statuss</th>
-    </tr>
-
-    {% for darbs in darbi %}
-
-    <tr>
-        <td>{{ darbs[0] }}</td>
-        <td>{{ darbs[1] }}</td>
-        <td>{{ darbs[2] }}</td>
-        <td>{{ darbs[3] }}</td>
-    </tr>
-
-    {% endfor %}
-
-	</style>
-</head>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #5D8AA8; color: white;">
+                <th style="padding: 12px; text-align: left;">Uzdevums</th>
+                <th style="padding: 12px; text-align: left;">Termiņš</th>
+                <th style="padding: 12px; text-align: left;">Statuss</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for darbs in darbi %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 12px;">{{ darbs.uzdevums }}</td>
+                <td style="padding: 12px;">{{ darbs.datums }} {{ darbs.laiks }}</td>
+                <td style="padding: 12px;"><span style="background: #D4E6F1; padding: 3px 8px; border-radius: 10px; font-size: 0.9rem;">{{ darbs.statuss }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
